@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class Client extends Person {
-    private int clientDealNumber;
+
     private Boolean paid;
+    private Car carBought;
 }

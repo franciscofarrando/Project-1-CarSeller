@@ -14,6 +14,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class Vendor extends Person{
-    private int vendorDealNumber;
     private boolean dealClosed;
+    private Car carSold;
 }
