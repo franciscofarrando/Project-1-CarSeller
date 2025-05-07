@@ -7,14 +7,18 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-
-public class Roles {
+@NoArgsConstructor
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    private String brand;
+    private String model;
     @Enumerated(EnumType.STRING)
-    private ERoles role;
+    private EEngine engine;
+
+    private Client buyItBy;
+
+    private Vendor soldBy;
 }
