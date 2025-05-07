@@ -17,7 +17,7 @@ public class Car {
     private String model;
     @Enumerated(EnumType.STRING)
     private EEngine engine;
-
+    private double price;
     private Client buyItBy;
 
     private Vendor soldBy;
