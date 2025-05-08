@@ -14,9 +14,9 @@ import lombok.experimental.SuperBuilder;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Vendor extends Person{
     private boolean dealClosed;
-    @OneToOne
-    @JoinColumn(name = "car_sold", referencedColumnName = "carId")
+    @OneToOne(mappedBy = "buyItBy")
     private Car carSold;
 }

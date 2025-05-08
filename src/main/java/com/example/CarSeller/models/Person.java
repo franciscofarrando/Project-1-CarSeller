@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,7 @@ public abstract class Person {
     private String name;
     private String address;
     private int phone;
-    @OneToOne(fetch = FetchType.EAGER)
-    private Collection<Roles> role = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private ERoles role;
 
 }

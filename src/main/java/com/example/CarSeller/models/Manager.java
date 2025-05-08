@@ -7,11 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@EqualsAndHashCode(callSuper = true)
+
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@SuperBuilder
 public class Manager extends Person {
 }

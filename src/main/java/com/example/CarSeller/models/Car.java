@@ -18,6 +18,10 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private EEngine engine;
     private double price;
-    private int clientId;
-    private int vendorId;
+    @OneToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client buyItBy;
+    @OneToOne
+    @JoinColumn(name = "vendor_id", referencedColumnName = "id")
+    private Vendor soldBy;
 }

@@ -14,10 +14,10 @@ import lombok.experimental.SuperBuilder;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Client extends Person {
 
     private Boolean paid;
-    @OneToOne
-    @JoinColumn(name = "car_bought", referencedColumnName = "carId")
+    @OneToOne(mappedBy = "buyItBy")
     private Car carBought;
 }
