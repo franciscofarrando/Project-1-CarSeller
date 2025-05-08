@@ -12,13 +12,12 @@ import lombok.NoArgsConstructor;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int carId;
     private String brand;
     private String model;
     @Enumerated(EnumType.STRING)
     private EEngine engine;
     private double price;
-    private Client buyItBy;
-
-    private Vendor soldBy;
+    private int clientId;
+    private int vendorId;
 }

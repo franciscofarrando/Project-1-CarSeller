@@ -13,7 +13,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
