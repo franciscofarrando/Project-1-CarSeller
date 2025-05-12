@@ -6,6 +6,7 @@ import com.example.CarSeller.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,9 +20,11 @@ public class PersonController {
     public List<Person> getAllPerson(){
         return personRepository.findAll();
     }
+    //POST
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Person createPerson(@RequestBody Person person){
         return personRepository.save(person);
     }
+
 }

@@ -2,10 +2,7 @@ package com.example.CarSeller.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

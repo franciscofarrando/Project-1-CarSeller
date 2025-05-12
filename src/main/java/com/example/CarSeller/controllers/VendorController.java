@@ -1,7 +1,7 @@
 package com.example.CarSeller.controllers;
 
 import com.example.CarSeller.models.Car;
-import com.example.CarSeller.models.Client;
+import com.example.CarSeller.models.Person;
 import com.example.CarSeller.models.Vendor;
 import com.example.CarSeller.repositories.CarRepository;
 import com.example.CarSeller.repositories.VendorRepository;
@@ -53,9 +53,22 @@ public class VendorController {
         }
         return vendors;
     }
+    //POST
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Vendor createVendor(@RequestBody Vendor vendor) {
         return vendorRepository.save(vendor);
+    }
+    //PUT
+    @PutMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Vendor updateVendor(@PathVariable int id, @RequestBody Vendor vendor){
+        Vendor existingVendor = vendorRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Vendor ID not found"));
+        existingVendor.setName(vendor.getName());
+        existingVendor.setAddress(vendor.getAddress());
+        existingVendor.setPhone(vendor.getPhone());
+        existingVendor.setRole(vendor.getRole());
+
+        return vendorRepository.save(existingVendor);
     }
 }

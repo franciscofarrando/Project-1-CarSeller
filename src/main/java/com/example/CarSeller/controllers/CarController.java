@@ -63,11 +63,24 @@ public class CarController {
 
     //POST
 
-
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Car createCar(@RequestBody Car car){
         return carRepository.save(car);
+    }
+
+    //PUT
+    @PutMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Car updateVendor(@PathVariable int id, @RequestBody Car car){
+        Car existingCar = carRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Vendor ID not found"));
+        existingCar.setBrand(car.getBrand());
+        existingCar.setModel(car.getModel());
+        existingCar.setEngine(car.getEngine());
+        existingCar.setPrice(car.getPrice());
+        existingCar.setVendor(car.getVendor());
+        existingCar.setClient(car.getClient());
+
+        return carRepository.save(existingCar);
     }
 }
