@@ -1,13 +1,11 @@
 package com.example.CarSeller.controllers;
 
+
 import com.example.CarSeller.models.Person;
 import com.example.CarSeller.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +18,10 @@ public class PersonController {
     @ResponseStatus(HttpStatus.OK)
     public List<Person> getAllPerson(){
         return personRepository.findAll();
+    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Person createPerson(@RequestBody Person person){
+        return personRepository.save(person);
     }
 }
