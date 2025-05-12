@@ -1,22 +1,28 @@
 package com.example.CarSeller.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 
 public class Vendor extends Person{
-    private boolean dealClosed;
-    @OneToOne(mappedBy = "buyItBy")
-    private Car carSold;
+    @OneToMany
+    @JoinColumn(name = "vendor_id")
+    @JsonIgnore
+    private List<Car> cars;
+    public Vendor(String name, String address, String phone, boolean dealClosed) {
+        super(name, address, phone, ERoles.ROLE_VENDOR);
+
+    }
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int carId;
+    private int id;
     private String brand;
     private String model;
     @Enumerated(EnumType.STRING)
@@ -20,8 +20,9 @@ public class Car {
     private double price;
     @OneToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client buyItBy;
-    @OneToOne
+    private Client client;
+
+    @ManyToOne
     @JoinColumn(name = "vendor_id", referencedColumnName = "id")
-    private Vendor soldBy;
+    private Vendor vendor;
 }

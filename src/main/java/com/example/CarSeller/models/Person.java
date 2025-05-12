@@ -1,18 +1,17 @@
 package com.example.CarSeller.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
+
 
 public abstract class Person {
     @Id
@@ -20,8 +19,18 @@ public abstract class Person {
     private int id;
     private String name;
     private String address;
-    private int phone;
+    private String phone;
     @Enumerated(EnumType.STRING)
     private ERoles role;
+
+    public Person() {
+    }
+
+    public Person(String name, String address, String phone, ERoles role) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.role = role;
+    }
 
 }

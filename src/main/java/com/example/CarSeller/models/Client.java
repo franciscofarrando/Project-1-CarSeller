@@ -1,22 +1,25 @@
 package com.example.CarSeller.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 
 public class Client extends Person {
 
     private Boolean paid;
-    @OneToOne(mappedBy = "buyItBy")
-    private Car carBought;
+
+    public Client(String name, String address, String phone, Boolean paid) {
+        super(name, address, phone, ERoles.ROLE_CLIENT);
+        this.paid = paid;
+    }
 }
