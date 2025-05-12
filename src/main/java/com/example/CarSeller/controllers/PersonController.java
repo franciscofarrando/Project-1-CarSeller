@@ -3,6 +3,7 @@ package com.example.CarSeller.controllers;
 
 import com.example.CarSeller.models.Person;
 import com.example.CarSeller.repositories.PersonRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class PersonController {
     //POST
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Person createPerson(@RequestBody Person person){
+    public Person createPerson(@RequestBody @Valid Person person){
         return personRepository.save(person);
     }
 

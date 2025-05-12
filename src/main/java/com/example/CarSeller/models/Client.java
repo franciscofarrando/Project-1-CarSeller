@@ -3,6 +3,7 @@ package com.example.CarSeller.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
@@ -15,7 +16,7 @@ import lombok.*;
 
 
 public class Client extends Person {
-
+    @NotNull
     private Boolean paid;
 
     public Client(String name, String address, String phone, Boolean paid) {

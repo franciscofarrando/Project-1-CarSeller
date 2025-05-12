@@ -1,9 +1,11 @@
 package com.example.CarSeller.controllers;
 
+import com.example.CarSeller.dtos.CarDTO;
 import com.example.CarSeller.models.Car;
 import com.example.CarSeller.models.EEngine;
 import com.example.CarSeller.models.Vendor;
 import com.example.CarSeller.repositories.CarRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +67,7 @@ public class CarController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Car createCar(@RequestBody Car car){
+    public Car createCar(@RequestBody @Valid Car car){
         return carRepository.save(car);
     }
 
@@ -82,5 +84,18 @@ public class CarController {
         existingCar.setClient(car.getClient());
 
         return carRepository.save(existingCar);
+    }
+    //PATCH
+    @PatchMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Car changeCarInfo(@PathVariable int id, @RequestBody CarDTO carDTO){
+        Car existingCar = carRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    if (carDTO.getVendor() != null){
+        existingCar.setVendor(carDTO.getVendor());
+    }
+        if (carDTO.getClient() != null){
+            existingCar.setClient(carDTO.getClient());
+        }
+    return carRepository.save(existingCar);
     }
 }

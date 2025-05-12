@@ -1,6 +1,8 @@
 package com.example.CarSeller.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
@@ -14,9 +16,16 @@ public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @NotEmpty
     private String name;
+    @NotNull
+    @NotEmpty
     private String address;
+    @NotNull
+    @NotEmpty
     private String phone;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private ERoles role;
 
@@ -30,4 +39,6 @@ public abstract class Person {
         this.role = role;
     }
 
+    public Person(String name, String address, String phone) {
+    }
 }

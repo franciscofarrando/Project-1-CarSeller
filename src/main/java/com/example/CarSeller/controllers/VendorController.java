@@ -1,6 +1,9 @@
 package com.example.CarSeller.controllers;
 
+import com.example.CarSeller.dtos.ManagerDTO;
+import com.example.CarSeller.dtos.VendorDTO;
 import com.example.CarSeller.models.Car;
+import com.example.CarSeller.models.Manager;
 import com.example.CarSeller.models.Person;
 import com.example.CarSeller.models.Vendor;
 import com.example.CarSeller.repositories.CarRepository;
@@ -71,4 +74,38 @@ public class VendorController {
 
         return vendorRepository.save(existingVendor);
     }
+    //PATCH
+    @PatchMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Vendor changeVendorInfo(@PathVariable int id, @RequestBody VendorDTO vendorDTO){
+        Vendor existingVendor = vendorRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (vendorDTO.getName() != null){
+            existingVendor.setName(vendorDTO.getName());
+        }
+
+        if (vendorDTO.getAddress() != null){
+            existingVendor.setAddress(vendorDTO.getAddress());
+        }
+
+        if (vendorDTO.getPhone() != null){
+            existingVendor.setPhone(vendorDTO.getPhone());
+        }
+
+        return vendorRepository.save(existingVendor);
+    }
+    @DeleteMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVendor(@PathVariable int id) {
+        Vendor existingVendor = vendorRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vendor ID not found"));
+
+        List<Car> cars = carRepository.findByVendor(existingVendor);
+        if (!cars.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete vendor with assigned cars");
+        }
+
+        vendorRepository.delete(existingVendor);
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.CarSeller.controllers;
 
+import com.example.CarSeller.dtos.ClientDTO;
+import com.example.CarSeller.dtos.ManagerDTO;
 import com.example.CarSeller.models.Client;
 import com.example.CarSeller.models.Manager;
 import com.example.CarSeller.repositories.ManagerRepository;
@@ -37,10 +39,39 @@ public class ManagerController {
             return vendors;
         }
 
-
+//POST
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Manager createManager(@RequestBody Manager manager) {
         return managerRepository.save(manager);
+    }
+    //PATCH
+    @PatchMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Manager changeManagerInfo(@PathVariable int id, @RequestBody ManagerDTO managerDTO){
+        Manager existingManager = managerRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (managerDTO.getName() != null){
+            existingManager.setName(managerDTO.getName());
+        }
+
+        if (managerDTO.getAddress() != null){
+            existingManager.setAddress(managerDTO.getAddress());
+        }
+
+        if (managerDTO.getPhone() != null){
+            existingManager.setPhone(managerDTO.getPhone());
+        }
+
+        return managerRepository.save(existingManager);
+    }
+
+    //DELETE
+    @DeleteMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteManager(@PathVariable int id) {
+        Manager existingManager = managerRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Manager ID not found"));
+
+        managerRepository.delete(existingManager);
     }
 }
