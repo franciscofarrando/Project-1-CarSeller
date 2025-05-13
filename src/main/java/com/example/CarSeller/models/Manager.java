@@ -13,6 +13,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class Manager extends Person {
     public Manager(String name, String address, String phone) {
-        super(name, address, phone, ERoles.ROLE_MANAGER);
+        super(name, address, phone);
     }
 }

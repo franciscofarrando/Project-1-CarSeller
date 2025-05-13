@@ -22,7 +22,7 @@ public class Vendor extends Person{
     @JsonIgnore
     private List<Car> cars;
     public Vendor(String name, String address, String phone, boolean dealClosed) {
-        super(name, address, phone, ERoles.ROLE_VENDOR);
+        super(name, address, phone);
 
     }
 }

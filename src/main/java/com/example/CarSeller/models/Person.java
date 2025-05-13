@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,20 +28,19 @@ public abstract class Person {
     @NotNull
     @NotEmpty
     private String phone;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private ERoles role;
+    private String username;
+    private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> role = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(String name, String address, String phone, ERoles role) {
+    public Person(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.role = role;
+
     }
 
-    public Person(String name, String address, String phone) {
-    }
 }

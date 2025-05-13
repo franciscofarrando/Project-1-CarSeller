@@ -20,7 +20,7 @@ public class Client extends Person {
     private Boolean paid;
 
     public Client(String name, String address, String phone, Boolean paid) {
-        super(name, address, phone, ERoles.ROLE_CLIENT);
+        super(name, address, phone);
         this.paid = paid;
     }
 }
