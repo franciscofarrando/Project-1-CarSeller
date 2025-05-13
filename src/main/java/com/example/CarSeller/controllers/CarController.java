@@ -49,9 +49,6 @@ public class CarController {
         return cars;
     }
 
-
-
-
     @GetMapping("/engine/{engine}")
     @ResponseStatus(HttpStatus.OK)
     public List<Car> getCarByEngine(@PathVariable(name = "engine") EEngine engine) {
@@ -63,39 +60,5 @@ public class CarController {
     }
 
 
-    //POST
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Car createCar(@RequestBody @Valid Car car){
-        return carRepository.save(car);
-    }
-
-    //PUT
-    @PutMapping("id/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Car updateVendor(@PathVariable int id, @RequestBody Car car){
-        Car existingCar = carRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Vendor ID not found"));
-        existingCar.setBrand(car.getBrand());
-        existingCar.setModel(car.getModel());
-        existingCar.setEngine(car.getEngine());
-        existingCar.setPrice(car.getPrice());
-        existingCar.setVendor(car.getVendor());
-        existingCar.setClient(car.getClient());
-
-        return carRepository.save(existingCar);
-    }
-    //PATCH
-    @PatchMapping("id/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Car changeCarInfo(@PathVariable int id, @RequestBody CarDTO carDTO){
-        Car existingCar = carRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    if (carDTO.getVendor() != null){
-        existingCar.setVendor(carDTO.getVendor());
-    }
-        if (carDTO.getClient() != null){
-            existingCar.setClient(carDTO.getClient());
-        }
-    return carRepository.save(existingCar);
-    }
 }

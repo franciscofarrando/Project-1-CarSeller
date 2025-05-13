@@ -25,7 +25,7 @@ public class ClientController {
     @Autowired
     RoleRepository roleRepository;
 
-    @GetMapping()
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<Client> getAllClients() {
         return clientRepository.findAll();
@@ -47,66 +47,4 @@ public class ClientController {
         return vendors;
     }
 
-    //POST
-    /*@PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Client createClient(@RequestBody Client client) {
-        return clientRepository.save(client);
-    }
-    */
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Client> createClient(@RequestBody ClientDTO clientDTO) {
-        List<Role> roles = roleRepository.findAllById(clientDTO.getRoleIds());
-
-        Client client = new Client(
-                clientDTO.getName(),
-                clientDTO.getAddress(),
-                clientDTO.getPhone(),
-                clientDTO.getPaid(),
-                clientDTO.getPassword(),
-                clientDTO.getUsername(),
-                roles
-        );
-
-        return ResponseEntity.ok(clientRepository.save(client));
-    }
-
-    //PATCH
-    @PatchMapping("id/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Client changeClientInfo(@PathVariable int id, @RequestBody ClientDTO clientDTO) {
-        Client existingClient = clientRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if (clientDTO.getName() != null) {
-            existingClient.setName(clientDTO.getName());
-        }
-
-        if (clientDTO.getAddress() != null) {
-            existingClient.setAddress(clientDTO.getAddress());
-        }
-
-        if (clientDTO.getPhone() != null) {
-            existingClient.setPhone(clientDTO.getPhone());
-        }
-        if (clientDTO.getPaid() != null) {
-            existingClient.setPaid(clientDTO.getPaid());
-        }
-
-
-        return clientRepository.save(existingClient);
-    }
-
-    //DELETE
-    @DeleteMapping("/id/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteClientById(@PathVariable int id) {
-        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
-
-        if (client.getPaid() != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client cannot be deleted because 'paid' is not null");
-        }
-
-        clientRepository.deleteById(id);
-    }
 }
