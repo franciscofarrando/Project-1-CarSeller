@@ -2,14 +2,13 @@ package com.example.CarSeller.controllers;
 
 import com.example.CarSeller.dtos.ManagerDTO;
 import com.example.CarSeller.dtos.VendorDTO;
-import com.example.CarSeller.models.Car;
-import com.example.CarSeller.models.Manager;
-import com.example.CarSeller.models.Person;
-import com.example.CarSeller.models.Vendor;
+import com.example.CarSeller.models.*;
 import com.example.CarSeller.repositories.CarRepository;
+import com.example.CarSeller.repositories.RoleRepository;
 import com.example.CarSeller.repositories.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +23,8 @@ public class VendorController {
     VendorRepository vendorRepository;
     @Autowired
     CarRepository carRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
@@ -57,11 +58,30 @@ public class VendorController {
         return vendors;
     }
     //POST
-    @PostMapping
+    /*@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Vendor createVendor(@RequestBody Vendor vendor) {
         return vendorRepository.save(vendor);
     }
+*/
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Vendor> createVendor(@RequestBody VendorDTO vendorDTO) {
+        List<Role> roles = roleRepository.findAllById(vendorDTO.getRoleIds());
+
+        Vendor vendor  = new Vendor(
+                vendorDTO.getName(),
+                vendorDTO.getAddress(),
+                vendorDTO.getPhone(),
+                vendorDTO.getUsername(),
+                vendorDTO.getPassword(),
+                roles
+        );
+
+        return ResponseEntity.ok(vendorRepository.save(vendor));
+    }
+
+
     //PUT
     @PutMapping("id/{id}")
     @ResponseStatus(HttpStatus.OK)

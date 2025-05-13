@@ -3,14 +3,14 @@ package com.example.CarSeller.controllers;
 
 import com.example.CarSeller.dtos.CarDTO;
 import com.example.CarSeller.dtos.ClientDTO;
-import com.example.CarSeller.models.Car;
-import com.example.CarSeller.models.Client;
-import com.example.CarSeller.models.Manager;
-import com.example.CarSeller.models.Person;
+import com.example.CarSeller.dtos.VendorDTO;
+import com.example.CarSeller.models.*;
 import com.example.CarSeller.repositories.ClientRepository;
+import com.example.CarSeller.repositories.RoleRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,6 +22,8 @@ import java.util.Optional;
 public class ClientController {
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
@@ -46,10 +48,28 @@ public class ClientController {
     }
 
     //POST
-    @PostMapping
+    /*@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client createClient(@RequestBody Client client) {
         return clientRepository.save(client);
+    }
+    */
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Client> createClient(@RequestBody ClientDTO clientDTO) {
+        List<Role> roles = roleRepository.findAllById(clientDTO.getRoleIds());
+
+        Client client = new Client(
+                clientDTO.getName(),
+                clientDTO.getAddress(),
+                clientDTO.getPhone(),
+                clientDTO.getPaid(),
+                clientDTO.getPassword(),
+                clientDTO.getUsername(),
+                roles
+        );
+
+        return ResponseEntity.ok(clientRepository.save(client));
     }
 
     //PATCH

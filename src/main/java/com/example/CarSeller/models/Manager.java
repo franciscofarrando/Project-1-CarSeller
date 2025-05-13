@@ -1,18 +1,30 @@
 package com.example.CarSeller.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 @Entity
 @Getter
 @Setter
 
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class Manager extends Person {
-    public Manager(String name, String address, String phone) {
+    private String username;
+    private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> role = new ArrayList<>();
+
+    public Manager(String name, String address, String phone, String username, String password, Collection<Role> role) {
         super(name, address, phone);
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Manager() {
     }
 }

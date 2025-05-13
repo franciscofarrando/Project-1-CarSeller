@@ -28,10 +28,6 @@ public abstract class Person {
     @NotNull
     @NotEmpty
     private String phone;
-    private String username;
-    private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> role = new ArrayList<>();
 
     public Person() {
     }
@@ -42,5 +38,4 @@ public abstract class Person {
         this.phone = phone;
 
     }
-
 }

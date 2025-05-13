@@ -1,19 +1,21 @@
 package com.example.CarSeller.Services;
 
-import com.example.CarSeller.models.Person;
-import com.example.CarSeller.repositories.PersonRepository;
+import com.example.CarSeller.models.Client;
+
+import com.example.CarSeller.repositories.ClientRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonService {
+public class ClientService {
     @Autowired
-    private PersonRepository personRepository;
+    private ClientRepository clientRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    public Person savePerson(Person person){
-        person.setPassword(passwordEncoder.encode(person.getPassword()));
-        return personRepository.save(person);
+    public Client saveClient(Client client){
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+        return clientRepository.save(client);
     }
 }

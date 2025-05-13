@@ -1,12 +1,13 @@
 package com.example.CarSeller.controllers;
 
-import com.example.CarSeller.dtos.ClientDTO;
 import com.example.CarSeller.dtos.ManagerDTO;
-import com.example.CarSeller.models.Client;
 import com.example.CarSeller.models.Manager;
+import com.example.CarSeller.models.Role;
 import com.example.CarSeller.repositories.ManagerRepository;
+import com.example.CarSeller.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,11 +19,17 @@ import java.util.Optional;
 public class ManagerController {
     @Autowired
     ManagerRepository managerRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Manager> getAllManagers(){
         return managerRepository.findAll();
     }
+
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Manager> getManagerById(@PathVariable(name = "id")int id){
@@ -40,11 +47,29 @@ public class ManagerController {
         }
 
 //POST
-    @PostMapping
+   /* @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Manager createManager(@RequestBody Manager manager) {
         return managerRepository.save(manager);
     }
+
+    */
+@PostMapping
+@ResponseStatus(HttpStatus.CREATED)
+public ResponseEntity<Manager> createManager(@RequestBody ManagerDTO managerDTO) {
+    List<Role> roles = roleRepository.findAllById(managerDTO.getRoleIds());
+
+    Manager manager = new Manager(
+            managerDTO.getName(),
+            managerDTO.getAddress(),
+            managerDTO.getPhone(),
+            managerDTO.getUsername(),
+            managerDTO.getPassword(),
+            roles
+    );
+
+    return ResponseEntity.ok(managerRepository.save(manager));
+}
     //PATCH
     @PatchMapping("id/{id}")
     @ResponseStatus(HttpStatus.OK)
