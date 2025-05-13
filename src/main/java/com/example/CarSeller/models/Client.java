@@ -30,4 +30,14 @@ public class Client extends Person {
 
     public Client() {
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "paid=" + paid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

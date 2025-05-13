@@ -34,4 +34,14 @@ public class Vendor extends Person{
 
     public Vendor() {
     }
+
+    @Override
+    public String toString() {
+        return "Vendor{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", cars=" + cars +
+                '}';
+    }
 }

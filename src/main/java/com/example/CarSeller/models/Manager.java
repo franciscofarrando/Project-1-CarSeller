@@ -27,4 +27,13 @@ public class Manager extends Person {
 
     public Manager() {
     }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }
